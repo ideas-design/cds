@@ -118,7 +118,7 @@ func (api *API) InitRouter() {
 	r.Handle("/download/{name}/{os}/{arch}", ScopeNone(), r.GET(api.downloadHandler, Auth(false)))
 
 	// feature
-	r.Handle("/feature/enabled/{name}", ScopeNone(), r.POST(api.isFeatureEanbledHandler))
+	r.Handle("/feature/enabled/{name}", ScopeNone(), r.POST(api.isFeatureEnabledHandler))
 
 	// Group
 	r.Handle("/group", Scope(sdk.AuthConsumerScopeGroup), r.GET(api.getGroupsHandler), r.POST(api.postGroupHandler))

@@ -545,3 +545,7 @@ type AuthSigninConsumerToken struct {
 	RequireMFA        bool   `json:"require_mfa,omitempty"`
 	IsFirstConnection bool   `json:"is_first_connection,omitempty"`
 }
+
+type AuthCDNToken struct {
+	ApiRefHash string `json:"api_ref"`
+}

@@ -6,6 +6,7 @@ import { PipelineStatus } from 'app/model/pipeline.model';
 import { Project } from 'app/model/project.model';
 import { Stage } from 'app/model/stage.model';
 import { WorkflowNodeJobRun, WorkflowNodeRun } from 'app/model/workflow.run.model';
+import { FeatureService } from 'app/service/feature/feature.service';
 import { AutoUnsubscribe } from 'app/shared/decorator/autoUnsubscribe';
 import { DurationService } from 'app/shared/duration/duration.service';
 import { ProjectState } from 'app/store/project.state';
@@ -49,18 +50,24 @@ export class WorkflowRunNodePipelineComponent implements OnInit, OnDestroy {
     displayServiceLogs = false;
     durationIntervalID: number;
 
+    isCDNEnable: boolean;
+
     constructor(
         private _durationService: DurationService,
         private _route: ActivatedRoute,
         private _router: Router,
         private _cd: ChangeDetectorRef,
-        private _store: Store
+        private _store: Store,
+        private _featureService: FeatureService
     ) {
         this.project = this._store.selectSnapshot(ProjectState.projectSnapshot);
         this.workflowName = (<WorkflowStateModel>this._store.selectSnapshot(WorkflowState)).workflowRun.workflow.name;
     }
 
     ngOnInit() {
+        this._featureService.isEnabled('cdn-job-logs', { 'project_key': this.project.key }).subscribe(f => {
+            this.isCDNEnable = f.enabled;
+        });
         this.nodeJobRunSubs = this.nodeJobRun$.subscribe(rj => {
             if (!rj && !this.currentJob) {
                 return;
@@ -116,7 +123,7 @@ export class WorkflowRunNodePipelineComponent implements OnInit, OnDestroy {
         if (this.currentJob && jobID === this.currentJob.pipeline_action_id) {
             return;
         }
-        this._store.dispatch(new SelectWorkflowNodeRunJob({jobID: jobID}));
+        this._store.dispatch(new SelectWorkflowNodeRunJob({ jobID: jobID }));
     }
 
     refreshNodeRun(data: WorkflowNodeRun): boolean {
@@ -209,7 +216,7 @@ export class WorkflowRunNodePipelineComponent implements OnInit, OnDestroy {
 
     ngOnDestroy(): void {
         this.deleteInterval();
-        this._store.dispatch(new SelectWorkflowNodeRunJob({jobID: 0}));
+        this._store.dispatch(new SelectWorkflowNodeRunJob({ jobID: 0 }));
     }
 
     deleteInterval(): void {

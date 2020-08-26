@@ -2,12 +2,13 @@ package index_test
 
 import (
 	"context"
-	"github.com/stretchr/testify/require"
 	"testing"
 
-	"github.com/ovh/cds/engine/api/test"
+	"github.com/stretchr/testify/require"
+
 	"github.com/ovh/cds/engine/cdn/index"
 	"github.com/ovh/cds/engine/gorpmapper"
+	"github.com/ovh/cds/engine/test"
 	"github.com/ovh/cds/sdk"
 )
 

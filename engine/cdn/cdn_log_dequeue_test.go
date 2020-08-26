@@ -8,13 +8,12 @@ import (
 	"github.com/mitchellh/hashstructure"
 	"github.com/stretchr/testify/require"
 
-	"github.com/ovh/cds/engine/api/test"
 	"github.com/ovh/cds/engine/cdn/index"
 	"github.com/ovh/cds/engine/cdn/storage"
 	_ "github.com/ovh/cds/engine/cdn/storage/local"
 	_ "github.com/ovh/cds/engine/cdn/storage/redis"
 	"github.com/ovh/cds/engine/gorpmapper"
-	commontest "github.com/ovh/cds/engine/test"
+	"github.com/ovh/cds/engine/test"
 	"github.com/ovh/cds/sdk"
 	"github.com/ovh/cds/sdk/log"
 	"github.com/ovh/cds/sdk/log/hook"
@@ -25,7 +24,7 @@ func TestStoreNewStepLog(t *testing.T) {
 	index.InitDBMapping(m)
 	storage.InitDBMapping(m)
 	db, cache := test.SetupPGWithMapper(t, m, sdk.TypeCDN)
-	cfg := commontest.LoadTestingConf(t, sdk.TypeCDN)
+	cfg := test.LoadTestingConf(t, sdk.TypeCDN)
 
 	// Create cdn service
 	s := Service{
@@ -105,7 +104,7 @@ func TestStoreLastStepLog(t *testing.T) {
 	index.InitDBMapping(m)
 	storage.InitDBMapping(m)
 	db, cache := test.SetupPGWithMapper(t, m, sdk.TypeCDN)
-	cfg := commontest.LoadTestingConf(t, sdk.TypeCDN)
+	cfg := test.LoadTestingConf(t, sdk.TypeCDN)
 
 	// Create cdn service
 	s := Service{
@@ -192,7 +191,7 @@ func TestStoreLogWrongOrder(t *testing.T) {
 	index.InitDBMapping(m)
 	storage.InitDBMapping(m)
 	db, cache := test.SetupPGWithMapper(t, m, sdk.TypeCDN)
-	cfg := commontest.LoadTestingConf(t, sdk.TypeCDN)
+	cfg := test.LoadTestingConf(t, sdk.TypeCDN)
 
 	// Create cdn service
 	s := Service{
@@ -306,7 +305,7 @@ func TestStoreNewServiceLogAndAppend(t *testing.T) {
 	index.InitDBMapping(m)
 	storage.InitDBMapping(m)
 	db, cache := test.SetupPGWithMapper(t, m, sdk.TypeCDN)
-	cfg := commontest.LoadTestingConf(t, sdk.TypeCDN)
+	cfg := test.LoadTestingConf(t, sdk.TypeCDN)
 
 	// Create cdn service
 	s := Service{

@@ -25,6 +25,7 @@ import { ConfigService } from './config/config.service';
 import { DownloadService } from './download/download.service';
 import { EnvironmentAuditService } from './environment/environment.audit.service';
 import { EnvironmentService } from './environment/environment.service';
+import { FeatureService } from './feature/feature.service';
 import { GroupService } from './group/group.service';
 import { HelpersService } from './helpers/helpers.service';
 import { HookService } from './hook/hook.service';
@@ -92,6 +93,7 @@ export class ServicesModule {
                 DownloadService,
                 EnvironmentAuditService,
                 EnvironmentService,
+                FeatureService,
                 GroupService,
                 HookService,
                 HelpersService,
