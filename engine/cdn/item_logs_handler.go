@@ -16,6 +16,21 @@ import (
 	"github.com/ovh/cds/sdk"
 )
 
+func (s *Service) getItemLogsHandler() service.Handler {
+	return func(ctx context.Context, w http.ResponseWriter, r *http.Request) error {
+		vars := mux.Vars(r)
+		apiRef := vars["apiRef"]
+
+		// Try to load item and item units for given api ref
+		item, err := index.LoadItemByApiRefHashAndType(ctx, s.Mapper, s.mustDBWithCtx(ctx), apiRef, index.TypeItemStepLog)
+		if err != nil {
+			return err
+		}
+
+		return service.WriteJSON(w, item, http.StatusOK)
+	}
+}
+
 func (s *Service) getItemLogsDownloadHandler() service.Handler {
 	return func(ctx context.Context, w http.ResponseWriter, r *http.Request) error {
 		vars := mux.Vars(r)
@@ -23,7 +38,7 @@ func (s *Service) getItemLogsDownloadHandler() service.Handler {
 		tokenRaw := strings.TrimPrefix(r.Header.Get("Authorization"), "Bearer ")
 
 		// Check Authorization header
-		var token sdk.AuthCDNToken
+		var token sdk.CDNAuthToken
 		v := authentication.NewVerifier(s.ParsedAPIPublicKey)
 		if err := v.VerifyJWS(tokenRaw, &token); err != nil {
 			return err

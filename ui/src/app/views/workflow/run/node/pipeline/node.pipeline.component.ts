@@ -9,6 +9,8 @@ import { WorkflowNodeJobRun, WorkflowNodeRun } from 'app/model/workflow.run.mode
 import { FeatureService } from 'app/service/feature/feature.service';
 import { AutoUnsubscribe } from 'app/shared/decorator/autoUnsubscribe';
 import { DurationService } from 'app/shared/duration/duration.service';
+import { AddFeatureResult, FeaturePayload } from 'app/store/feature.action';
+import { FeatureResult } from 'app/store/feature.state';
 import { ProjectState } from 'app/store/project.state';
 import { SelectWorkflowNodeRunJob } from 'app/store/workflow.action';
 import { WorkflowState, WorkflowStateModel } from 'app/store/workflow.state';
@@ -50,8 +52,6 @@ export class WorkflowRunNodePipelineComponent implements OnInit, OnDestroy {
     displayServiceLogs = false;
     durationIntervalID: number;
 
-    isCDNEnable: boolean;
-
     constructor(
         private _durationService: DurationService,
         private _route: ActivatedRoute,
@@ -66,7 +66,13 @@ export class WorkflowRunNodePipelineComponent implements OnInit, OnDestroy {
 
     ngOnInit() {
         this._featureService.isEnabled('cdn-job-logs', { 'project_key': this.project.key }).subscribe(f => {
-            this.isCDNEnable = f.enabled;
+            this._store.dispatch(new AddFeatureResult(<FeaturePayload>{
+                key: f.name,
+                result: <FeatureResult>{
+                    paramString: this.project.key,
+                    enabled: f.enabled
+                }
+            }));
         });
         this.nodeJobRunSubs = this.nodeJobRun$.subscribe(rj => {
             if (!rj && !this.currentJob) {

@@ -68,7 +68,7 @@ func TestGetItemLogsDownloadHandler(t *testing.T) {
 	require.NoError(t, err)
 	s.Common.ParsedAPIPublicKey = signer.GetVerifyKey()
 
-	apiRef := index.ApiRef{
+	apiRef := sdk.CDNLogAPIRef{
 		ProjectKey:     hm.Signature.ProjectKey,
 		WorkflowName:   hm.Signature.WorkflowName,
 		WorkflowID:     hm.Signature.WorkflowID,

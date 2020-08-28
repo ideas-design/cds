@@ -84,7 +84,7 @@ func TestRun(t *testing.T) {
 	require.NotNil(t, units)
 	require.NotEmpty(t, units)
 
-	apiRef := index.ApiRef{
+	apiRef := sdk.CDNLogAPIRef{
 		ProjectKey: sdk.RandomString(5),
 	}
 

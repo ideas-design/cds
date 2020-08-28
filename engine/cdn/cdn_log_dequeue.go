@@ -185,7 +185,7 @@ func (s *Service) loadOrCreateIndexItem(ctx context.Context, typ string, signatu
 	defer tx.Rollback() // nolint
 
 	// Build cds api ref
-	apiRef := index.ApiRef{
+	apiRef := sdk.CDNLogAPIRef{
 		ProjectKey:     signature.ProjectKey,
 		WorkflowName:   signature.WorkflowName,
 		WorkflowID:     signature.WorkflowID,

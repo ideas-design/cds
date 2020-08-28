@@ -71,7 +71,7 @@ func TestStoreNewStepLog(t *testing.T) {
 	err = s.storeLogs(context.TODO(), index.TypeItemStepLog, hm.Signature, hm.Status, content, hm.Line)
 	require.NoError(t, err)
 
-	apiRef := index.ApiRef{
+	apiRef := sdk.CDNLogAPIRef{
 		ProjectKey:     hm.Signature.ProjectKey,
 		WorkflowName:   hm.Signature.WorkflowName,
 		WorkflowID:     hm.Signature.WorkflowID,
@@ -144,7 +144,7 @@ func TestStoreLastStepLog(t *testing.T) {
 			},
 		},
 	}
-	apiRef := index.ApiRef{
+	apiRef := sdk.CDNLogAPIRef{
 		ProjectKey:     hm.Signature.ProjectKey,
 		WorkflowName:   hm.Signature.WorkflowName,
 		WorkflowID:     hm.Signature.WorkflowID,
@@ -233,7 +233,7 @@ func TestStoreLogWrongOrder(t *testing.T) {
 			},
 		},
 	}
-	apiRef := index.ApiRef{
+	apiRef := sdk.CDNLogAPIRef{
 		ProjectKey:     hm.Signature.ProjectKey,
 		WorkflowName:   hm.Signature.WorkflowName,
 		WorkflowID:     hm.Signature.WorkflowID,
@@ -347,7 +347,7 @@ func TestStoreNewServiceLogAndAppend(t *testing.T) {
 	err = s.storeLogs(context.TODO(), index.TypeItemServiceLog, hm.Signature, hm.Status, hm.Msg.Full, 0)
 	require.NoError(t, err)
 
-	apiRef := index.ApiRef{
+	apiRef := sdk.CDNLogAPIRef{
 		ProjectKey:     hm.Signature.ProjectKey,
 		WorkflowName:   hm.Signature.WorkflowName,
 		WorkflowID:     hm.Signature.WorkflowID,
